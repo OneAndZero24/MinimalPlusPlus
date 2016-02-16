@@ -2,7 +2,7 @@
 #Free, open-source and minimallistic C++ IDE for Linux.
 
 #Description
-Minimal++ is a completly free and open source(GNU licese) project. The main aim of the whole project is to create very minimallistic, yet powerfull and configurable Linux IDE for C++. It offers a basic functionallity of IDE including:
+Minimal++ is a completly free and open source(GNU license) project. The main aim of the whole project is to create very minimallistic, yet powerfull and configurable Linux IDE for C++. It offers a basic functionallity of IDE including:
 -text editor
 -tree view of directories and files in project
 -compiling
