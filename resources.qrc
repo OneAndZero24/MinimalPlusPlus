@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icons/compile_icon.gif</file>
+        <file>Icons/contact_icon.gif</file>
+        <file>Icons/copy_icon.gif</file>
+        <file>Icons/custom_compiler_line_icon.gif</file>
+        <file>Icons/custom_linker_line_icon.gif</file>
+        <file>Icons/cut_icon.gif</file>
+        <file>Icons/delete_icon.gif</file>
+        <file>Icons/editor_text_icon.gif</file>
+        <file>Icons/new_file_icon.gif</file>
+        <file>Icons/new_project_icon.gif</file>
+        <file>Icons/open_file_icon.gif</file>
+        <file>Icons/open_project_icon.gif</file>
+        <file>Icons/paste_icon.gif</file>
+        <file>Icons/run_icon.gif</file>
+        <file>Icons/save_all_icon.gif</file>
+        <file>Icons/save_as_icon.gif</file>
+        <file>Icons/save_icon.gif</file>
+        <file>Icons/terminal_text_icon.gif</file>
+        <file>Icons/window_size_icon.gif</file>
+        <file>Icons/redo_icon.gif</file>
+        <file>Icons/undo_icon.gif</file>
+        <file>Icons/customize_toolbar_icon.gif</file>
+        <file>Icons/resource_icon.gif</file>
+    </qresource>
+</RCC>
