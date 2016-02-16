@@ -1,3 +1,7 @@
+//Minimal++ source code
+//Jan Miksa
+
+#ifndef HIGHLIGHTER_HPP
 #define HIGHLIGHTER_HPP
 
 //{

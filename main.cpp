@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     //Creating qapplication
 
     Window window;
-    window.show();
+    window.showMaximized();
     //Showing main window of program
 
     return app.exec();
