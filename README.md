@@ -28,6 +28,6 @@ Creator: Jan Miksa(OneAndZero24)
 E-Mail: oneandzero24@gmail.com
 
 #Note
-This project is currently beeing busily developed. Some of the features are not implemented yet or they are not working, but it will be fixed.
+This project is currently beeing busily developed. Some of the features are not implemented yet or they are not working, but it will be fixed. Some of the code is currently just a place holder. In the future there will be separate Libraries folder.
 
 Shortcuts and status bar tips are not working and I am not sure why...
