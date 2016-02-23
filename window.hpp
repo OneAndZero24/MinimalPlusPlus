@@ -56,6 +56,9 @@
 #include <QPlainTextEdit>
 //Plain text editor
 
+#include <QObject>
+//Qt object
+
 //{
 #include "highlighter.cpp"
 //Syntax highlighter for text editor
@@ -65,6 +68,38 @@
 
 //}
 //Libraries
+
+class LineNumberArea;
+//Area where line numbers are painted on code editor header
+
+
+
+class LineNumberArea : public QWidget
+{
+public:
+    LineNumberArea(CodeEditor *ceditor) : QWidget(ceditor)
+    {
+        editor = ceditor;
+        //Setting parameters as "parent" code editor
+    }
+    //Constructor
+
+    QSize sizeHint() const
+    {
+        return QSize(editor->lineNumberAreaWidth(), 0);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event)
+    {
+        editor->lineNumberAreaPaintEvent(event);
+    }
+
+private:
+    CodeEditor *editor;
+    //Code editor on which line numbers are drawn
+};
+//Area where line numbers are painted on code editor
 
 class Window : public QMainWindow
 {
