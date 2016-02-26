@@ -72,7 +72,36 @@
 class LineNumberArea;
 //Area where line numbers are painted on code editor header
 
+class CodeEditor : public QPlainTextEdit
+{
+    Q_OBJECT
 
+public:
+    CodeEditor(QWidget *parent);
+    //Constructor
+
+    void lineNumberAreaPaintEvent(QPaintEvent *event);
+    //
+
+    int lineNumberAreaWidth();
+    //Getting size of area for displaying line numbers
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+    //On resize event callback
+
+private slots:
+    void updateLineNumberAreaWidth(int newBlockCount);
+    //Update line displayment area size
+
+    void updateLineNumberArea(const QRect &, int);
+    //Update numbers of lines
+
+private:
+    QWidget *lineNumberArea;
+    //Area to display lines
+};
+//Code editor class
 
 class LineNumberArea : public QWidget
 {
@@ -88,12 +117,14 @@ public:
     {
         return QSize(editor->lineNumberAreaWidth(), 0);
     }
+    //Getting size
 
 protected:
     void paintEvent(QPaintEvent *event)
     {
         editor->lineNumberAreaPaintEvent(event);
     }
+    //On paint event callback
 
 private:
     CodeEditor *editor;

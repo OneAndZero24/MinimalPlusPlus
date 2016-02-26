@@ -466,3 +466,72 @@ void Window::CreateTextEditor()
     //Just for testing delete this later
 }
 //Inicializes text editor
+
+CodeEditor::CodeEditor(CodeEditor *parent) : QPlainTextEdit(parent)
+{
+    lineNumberArea = new LineNumberArea(this);
+    //Creating new instance of line counter
+
+    connect(this, SIGNAL(blockCountChanged(int), this, SLOT(updateLineNumberAreaWidth(int)));
+    //Connecting size-change signal to its' slot
+
+    connect(this, SIGNAL(updateRequest(QRect,int), this, SLOT(updateLineNumberArea(QRect,int)));
+    //Conneting update signal to udate line number area slot
+
+    updateLineNumberAreaWidth(0);
+    //Standard line counter size
+}
+//Constructor
+
+int CodeEditor::lineNumberAreaWidth()
+{
+    int digits = 1;
+    //Number of digits in line
+
+    int max = qMax(1, blockCount());
+    //Maximum between 1 and number of blocks in text
+
+    while(max >= 10)
+    {
+        max /= 10;
+        //Division
+
+        digits++;
+        //Increasing number of digits
+    }
+    //Loop for counting digits
+
+    int width = 4 + fontMetrics().width(QLatin1Char('9')) * digits;
+    //Counting width of line counter
+
+    return width;
+}
+//Gets size of line counter
+
+void CodeEditor::updateLineNumberAreaWidth(int iDontNeedThisVarButItMustBeHereToMakeSlotCompatibleWithSignal)
+{
+    setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
+    //Setting margin of editor to fit line counter there
+}
+//Updates width of line number area
+
+void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
+{
+    if (dy)
+    {
+        lineNumberArea->scroll(0, dy);
+        //Scrolling line counter
+    }
+    else
+    {
+        lineNumberArea->update(0, rect.y(), lineNumberArea->width(), rect.height());
+        //Redrawing line area
+    }
+
+    if (rect.contains(viewport()->rect()))
+    {
+        updateLineNumberAreaWidth(0);
+        //Updating line area width
+    }
+}
+//Updating line counter widget
