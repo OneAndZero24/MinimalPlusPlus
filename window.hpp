@@ -139,9 +139,6 @@ Q_OBJECT
 private:
     QGridLayout *layout; //Window grid layout
 
-    QWidget *upwidget;   //Widget for layout
-    QWidget *leftwidget; //Widget for layout
-
     QMenu *fileMenu;     //File menu of program
     QMenu *settingsMenu; //Settings menu of program
     QMenu *contactMenu;  //Contact menu of program

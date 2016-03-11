@@ -6,9 +6,11 @@
 
 Window::Window()
 {
-    layout = new QGridLayout();
-    setLayout(layout);
-    //Creating and setting layout
+    QWidget *lhandler = new QWidget;
+    //Widget for layout handling
+
+    layout = new QGridLayout;
+    //Creating layout
 
     CreateActions();
     CreateStatusBar();
@@ -19,7 +21,7 @@ Window::Window()
     CreateTextEditor();
     //Inicializing program parts
 
-    setCentralWidget(editor);
+    setCentralWidget(lhandler);
     //Setting editor as central widget
 
     QString title = QString::fromStdString("Minimal++ - "+projectname);
@@ -31,6 +33,11 @@ Window::Window()
     setMinimumSize(900, 900);
     //Minimal size of Window
 
+    lhandler->setLayout(layout);
+    //Setting layout
+
+    lhandler->show();
+    //Displaying layout with all UI parts
 }
 //Constructor
 
@@ -395,27 +402,24 @@ void Window::CreateStatusBar()
 
 void Window::CreateToolBar()
 {
-    upwidget = new QWidget(this);
-    //Creating up widget
-
-    tools = new QToolBar(upwidget);
+    tools = new QToolBar(this);
     //Inicializing toolbar - instance
+
+    layout->addWidget(tools, 0, 0, 1, 8);
+    //Adding toolbar to window
 
     tools->addAction(customizeTools);
     //Adding cutomizability
-
-    layout->addWidget(upwidget, 0, 0);
-    //Adding toolbar to window
 }
 //Function for inicializing customizable tools toolbar
 
 void Window::CreateTreeView()
 {
-    leftwidget = new QWidget(this);
-    //Creating left widget
-
-    tree = new QTreeWidget(leftwidget);
+    tree = new QTreeWidget(this);
     //Inicializing tree
+
+    layout->addWidget(tree, 1, 0, 7, 2);
+    //Adding to layout
 
     tree->setColumnCount(1);
     //Setting one column
@@ -426,9 +430,6 @@ void Window::CreateTreeView()
 
     AddFile("main.cpp", projectdir);
     //Just test delete this
-
-    layout->addWidget(leftwidget, 0, 1, 1, 1);
-    //Displaying it
 }
 //Inicializes tree view
 
@@ -436,6 +437,9 @@ void Window::CreateTextBrowser()
 {
     output = new QTextBrowser(this);
     //Inicializing text browser - creating instance
+
+    layout->addWidget(output, 6, 2, 2, 6);
+    //Adding to layout
 
     output->setSource(*new QUrl(QString::fromStdString(compileroutput)));
     //Setting source to compiler output
@@ -449,6 +453,8 @@ void Window::CreateTextEditor()
 {
     editor =  new CodeEditor(this);
     //Creating text editor - instance
+
+    layout->addWidget(editor, 1, 2, 5, 6);
 
     QFont font;
     font.setFamily(QString::fromStdString(stdfont));
