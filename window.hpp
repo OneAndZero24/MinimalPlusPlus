@@ -81,7 +81,7 @@ public:
     //Constructor
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
-    //
+    //Paints widget
 
     int lineNumberAreaWidth();
     //Getting size of area for displaying line numbers
@@ -182,7 +182,7 @@ private:
 
     QTextBrowser *output; //Text browser for terminal and ide output
 
-    QPlainTextEdit *editor; //Editor
+    CodeEditor *editor; //Editor
 
     SyntaxHighlighter *highlighter; //Syntax highlighter
 

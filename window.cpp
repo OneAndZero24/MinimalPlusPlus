@@ -447,7 +447,7 @@ void Window::CreateTextBrowser()
 
 void Window::CreateTextEditor()
 {
-    editor =  new QPlainTextEdit;
+    editor =  new CodeEditor(this);
     //Creating text editor - instance
 
     QFont font;
@@ -467,15 +467,15 @@ void Window::CreateTextEditor()
 }
 //Inicializes text editor
 
-CodeEditor::CodeEditor(CodeEditor *parent) : QPlainTextEdit(parent)
+CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
     lineNumberArea = new LineNumberArea(this);
     //Creating new instance of line counter
 
-    connect(this, SIGNAL(blockCountChanged(int), this, SLOT(updateLineNumberAreaWidth(int)));
+    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
     //Connecting size-change signal to its' slot
 
-    connect(this, SIGNAL(updateRequest(QRect,int), this, SLOT(updateLineNumberArea(QRect,int)));
+    connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
     //Conneting update signal to udate line number area slot
 
     updateLineNumberAreaWidth(0);
@@ -535,3 +535,52 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
     }
 }
 //Updating line counter widget
+
+void CodeEditor::resizeEvent(QResizeEvent *e)
+{
+    QPlainTextEdit::resizeEvent(e);
+    //Resizing it
+
+    QRect cr = contentsRect();
+    lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
+    //Updating area for line numbers
+}
+//On resize event callback
+
+void CodeEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
+{
+    QPainter painter(lineNumberArea);
+    //Creating QPainter
+
+    painter.fillRect(event->rect(), Qt::black);
+    //Painting background
+
+    QTextBlock block = firstVisibleBlock();
+    int blockNumber = block.blockNumber();
+    int top = (int) blockBoundingGeometry(block).translated(contentOffset()).top();
+    int bottom = top + (int) blockBoundingRect(block).height();
+    //Important vars for paintning line number with loop below
+
+    while (block.isValid() && top <= event->rect().bottom())
+    {
+        if (block.isVisible() && bottom >= event->rect().top()) //Checking if block is visible
+        {
+            QString number = QString::number(blockNumber + 1);
+            //Setting text to paint
+
+            painter.setPen(Qt::blue);
+            //Setting color
+
+            painter.drawText(0, top, lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+            //Painting line number
+        }
+
+        block = block.next();
+        top = bottom;
+        bottom = top + (int) blockBoundingRect(block).height();
+        ++blockNumber;
+        //Going to next block
+    }
+    //Loop for painting line number in each line
+}
+//Paints widget
