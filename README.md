@@ -6,6 +6,7 @@ Minimal++ is a completly free and open source(GNU license) project. The main aim
 -text editor
 -tree view of directories and files in project
 -compiling
+-debuging
 -editing project structure
 It also offers some unusuall functions such as:
 -simplicity of UI and usage
@@ -13,7 +14,7 @@ It also offers some unusuall functions such as:
 -customazibility
 
 #Info
-Minimal++ is written in C++. The main library that it is using is Qt(especially for UI). Currently Minimal++ is only for Linux, but later we may link it to other platforms. To run programs Minimal++ is using xterm. Default compilator is gcc.
+Minimal++ is written in C++. The main library that it is using is Qt 5.4.2(especially for UI). Currently Minimal++ is only for Linux, but later we may link it to other platforms. To run programs Minimal++ is using xterm. Default compilator is gcc. Defaul debuger is gdb.
 
 #Icons
 Icon for this program were taken from Eclipse. They are under EPL license. I hope that in the future Minimal++ will have its' own set of icons.
@@ -28,6 +29,6 @@ Creator: Jan Miksa(OneAndZero24)
 E-Mail: oneandzero24@gmail.com
 
 #Note
-This project is currently beeing busily developed. Some of the features are not implemented yet or they are not working, but it will be fixed. Some of the code is currently just a place holder. In the future there will be separate Libraries folder.
+This project is currently beeing busily developed. Some of the features are not implemented yet or they are not working, but it will be fixed. Some of the code is currently just a placeholder.
 
 Shortcuts and status bar tips are not working and I am not sure why...

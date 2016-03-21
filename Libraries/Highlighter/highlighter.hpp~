@@ -14,21 +14,17 @@
 //}
 //Libraries
 
+//==================================================================
 class SyntaxHighlighter : public QSyntaxHighlighter
 {
 Q_OBJECT
 
 public:
-    inline SyntaxHighlighter(QTextDocument *parent = 0) : QSyntaxHighlighter(parent)
-    {
-
-    }
+    SyntaxHighlighter(QTextDocument *parent = 0) : QSyntaxHighlighter(parent)
     //Constructor
 
 protected:
-    void highlightBlock(const QString &code) Q_DECL_OVERRIDE
-    {
-    }
+    highlightBlock(const QString &code) Q_DECL_OVERRIDE
     //Highlighting function
 
 private:
@@ -44,8 +40,8 @@ private:
     QRegExp commentStartExpression; //Start of comment format
     QRegExp commentEndExpression;   //End of comment format
 
+    QTextCharFormat operatorFormat;              //Format of operator
     QTextCharFormat keywordFormat;               //Format of keyword
-    QTextCharFormat typeFormat;                  //Format of type
     QTextCharFormat semicolonFormat;             //Format of semicolon
     QTextCharFormat preprocessordirectiveFormat; //Format of preprocessor directive
     QTextCharFormat classFormat;                 //Format of class
@@ -54,6 +50,9 @@ private:
     QTextCharFormat quotationFormat;             //Format of queote
     QTextCharFormat functionFormat;              //Format of function
 };
-//SyntaxHighlighter class definition
+//Syntax highlighter with custom rules for editor
 
-#endif // HIGHLIGHTER_HPP
+//==================================================================
+//SyntaxHighlighter class declaration
+
+#endif

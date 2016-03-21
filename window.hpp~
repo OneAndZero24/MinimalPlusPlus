@@ -5,32 +5,44 @@
 #define WINDOW_HPP
 
 //{
+#include <string>
+//String
+
 #include <QApplication>
-//Main Qt application parts
+//Qt app
 
 #include <QMainWindow>
-//Qt window
+//Qt main window
+
+#include <QTextCodec>
+//Text encoding
 
 #include <QPushButton>
 //Buttons
 
 #include <QMenu>
-//Menus
+//Qt menu
 
 #include <QMenuBar>
-//Menubar
+//Qt menu bar
 
 #include <QStatusBar>
-//Statusbar
+//Qt status bar
+
+#include <QToolBar>
+//Qt tool bar
 
 #include <QAction>
-//Actions in menus in menubar
+//Qt action
 
 #include <QtGui>
 //Qt GUI
 
 #include <QtCore>
-//Core Qt functions
+//Qt core
+
+#include <QTreeWidgetItem>
+//Qt tree widget
 
 #include <QGridLayout>
 //Qt grid layout
@@ -38,24 +50,27 @@
 #include <QWidget>
 //Qt widget
 
+#include <QTextBrowser>
+//Qt text browser for terminal output
+
+#include <QPlainTextEdit>
+//Plain text editor
+
 #include <QObject>
 //Qt object
+
+#include <QFile>
+//Files handling
 
 #include <QMessageBox>
 //Popups
 
+#include <QFileDialog>
+//File browser
+
 //{
-#include "Libraries/Status_Vars/status_vars.hpp"
-//Important IDE-wide flags and variables
-
-#include "Libraries/Highlighter/highlighter.cpp"
+#include "highlighter.cpp"
 //Syntax highlighter for text editor
- 
-#include "Libraries/Editor/editor.cpp"
-//Code editor
-
-#include "Libraries/File_Handling/file_handling.cpp"
-//File handling
 
 //}
 //Minimal++ libraries
@@ -63,13 +78,12 @@
 //}
 //Libraries
 
-//==================================================================
 class Window : public QMainWindow
 {
 Q_OBJECT
 
 private:
-    QGridLayout *layout; //Window's grid layout
+    QGridLayout *layout; //Window grid layout
 
     QMenu *fileMenu;     //File menu of program
     QMenu *settingsMenu; //Settings menu of program
@@ -78,47 +92,64 @@ private:
     QMenu *buildMenu;    //Menu of build
 
     QAction *save;        //Save current file
-    QAction *saveAll;     //Save all files
+    QAction *saveAll;     //Save All files
     QAction *saveAs;      //Save current file as
     QAction *newFile;     //Create new file
     QAction *newProject;  //Create new project
-    QAction *openFile;    //Open file and add to current project, if no project popup error
+    QAction *openFile;    //Open file and add to current project, if no project create one
     QAction *openProject; //Open project file
     QAction *deleteFile;  //Delete current file
 
     QAction *copy;  //Copy text
     QAction *paste; //Paste text
     QAction *cut;   //Cut text
-    QAction *undo;  //Undo changes in text
-    QAction *redo;  //Redo changes in text
+    QAction *undo;  //Undo text
+    QAction *redo;  //Redo text
 
     QAction *compileProj; //Comiple project
     QAction *runProg;     //Run program
 
     QAction *windowSize;        //Set window size and remember it for this project
-    QAction *editorText;        //Setup font of editor and remember it for this project
-    QAction *terminalText;      //Setup font of terminal/output and remember it for this project
-    QAction *customCompileLine; //Setup custom compilation line and remember it for this project
-    QAction *customLinkLine;    //Setup custom linker line and remember it for this project
+    QAction *editorText;        //Setup font of editor
+    QAction *terminalText;      //Setup font of terminal/output
+    QAction *customCompileLine; //Setup custom compilation line
+    QAction *customLinkLine;    //Setup custom linker line
 
     QAction *contact; //Contact
 
     QAction *customizeTools; //Toolbar settings
 
-    SyntaxHighlighter *highlighter; //Syntax highlighter for code editor
+    QToolBar *tools; //Customizable toolbar
+
+    QTreeWidget *tree; //Files tree
+
+    QTextBrowser *output; //Text browser for terminal and ide output
+
+    CodeEditor *editor; //Editor
+
+    SyntaxHighlighter *highlighter; //Syntax highlighter
 
     void CreateActions();     //Inicializes actions
     void CreateMenu();        //Inicializes menu of program
     void CreateStatusBar();   //Inicializes status bar of program
     void CreateToolBar();     //Inicializes customizable toolbar
     void CreateTreeView();    //Inicializes tree view
-    void CreateTextBrowser(); //Inicializes text browser for terminal and IDE output
+    void CreateTextBrowser(); //Inicializes text browser for terminal and ide output
     void CreateTextEditor();  //Inicializes text editor
 
 public:
-    Window();  //Constructor
+    QFile *currentfile;           //Currenly opened file
+    QTreeWidgetItem *currentdir; //Currently opened dir
 
-    QTreeWidgetItem *AddDir(QString name);            //Adding directory to tree view
+    std::string projectname = "Untitled";        //Important var for handling project name
+    std::string compileroutput = "setthislater"; //Important var for handling compiler output file
+    std::string stdfont = "Ubuntu";              //Important var for handling standard font
+    int fontsize = 10;                           //Important var for handling standard font size
+
+    Window();  //Constructor
+    ~Window(); //Destructor
+
+    QTreeWidgetItem *AddDir(QString name);                        //Adding directory to tree view
     void AddFile(QString name, QTreeWidgetItem *dir); //Adding new file to directory in tree view
 
 private slots:
@@ -129,8 +160,8 @@ private slots:
     void saveCurrFileAs();    //Save current file as slot
     void createNewFile();     //Create new file slot
     void createNewProject();  //Create new project slot
-    void openCurrFile();      //Open file and set it as current slot
-    void openCurrProject();   //Open project and set it as current slot
+    void openCurrFile();      //Open file and set it as current - handle it slot
+    void openCurrProject();   //Open project and set it as current - handle it slot
     void changeCompilerCmd(); //Change compiler command and settings slot
     void changeLinkerCmd();   //Change linker command and settings slot
     void contactSL();         //Contact slot
@@ -146,8 +177,5 @@ private slots:
     void redoText();          //Redo slot
 };
 //Basic window class
-
-//==================================================================
-//Window class declaration
 
 #endif

@@ -1,25 +1,23 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2016-02-14T23:25:50
-#
-#-------------------------------------------------
+#Minimal++ source code
+#Jan Miksa
 
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MinimalPlusPlus
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
-        window.cpp \
-    highlighter.cpp
+           window.cpp\
+           Libraries/Editor/editor.cpp\
+           Libraries/File_Handling/file_handling.cpp\
+           Libraries/Highlighter/highlighter.cpp\
 
-HEADERS  += window.hpp \
-    highlighter.hpp
+HEADERS  += window.hpp\
+           Libraries/Editor/editor.hpp\
+           Libraries/File_Handling/file_handling.hpp\
+           Libraries/Highlighter/highlighter.hpp\
+           Libraries/Status_Vars/status_vars.hpp\
 
-FORMS    +=
-
-RESOURCES += \
-    resources.qrc
+RESOURCES += resources.qrc
