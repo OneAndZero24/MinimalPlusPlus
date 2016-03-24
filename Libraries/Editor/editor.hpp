@@ -8,6 +8,12 @@
 #include <QPlainTextEdit>
 //Plain text editor
 
+#include <QPainter>
+//Qt painter
+
+#include <QTextBlock>
+//Qt text block
+
 //}
 //Libraries
 
@@ -18,19 +24,15 @@ class CodeEditor;
 class LineNumberArea : public QWidget
 {
 public:
-    LineNumberArea(CodeEditor *ceditor);
-    //Constructor
+    LineNumberArea(CodeEditor *ceditor); //Constructor
 
-    QSize sizeHint();
-    //Getting size
+    QSize sizeHint(); //Getting size
 
 protected:
-    void paintEvent(QPaintEvent *event);
-    //On paint event callback
+    void paintEvent(QPaintEvent *event); //On paint event callback
 
 private:
-    CodeEditor *editor;
-    //Code editor on which line numbers are drawn
+    CodeEditor *editor; //Code editor on which line numbers are drawn
 };
 //Area where line numbers are painted on code editor
 
@@ -43,29 +45,21 @@ class CodeEditor : public QPlainTextEdit
     Q_OBJECT
 
 public:
-    CodeEditor(QWidget *parent);
-    //Constructor
+    CodeEditor(QWidget *parent); //Constructor
+    ~CodeEditor();               //Destructor
 
-    void lineNumberAreaPaintEvent(QPaintEvent *event);
-    //Paints widget
-
-    int lineNumberAreaWidth();
-    //Getting size of area for displaying line numbers
+    void lineNumberAreaPaintEvent(QPaintEvent *event); //Paints widget
+    int lineNumberAreaWidth();                         //Getting size of area for displaying line numbers
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    //On resize event callback
+    void resizeEvent(QResizeEvent *event); //On resize event callback
 
 private slots:
-    void updateLineNumberAreaWidth(int newBlockCount);
-    //Update line displayment area size
-
-    void updateLineNumberArea(const QRect &, int);
-    //Update numbers of lines
+    void updateLineNumberAreaWidth(); //Update line displayment area size
+    void updateLineNumberArea(const QRect &, int); //Update numbers of lines
 
 private:
-    QWidget *lineNumberArea;
-    //Area to display lines
+    QWidget *lineNumberArea; //Area to display lines
 };
 //Code editor
 

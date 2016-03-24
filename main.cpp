@@ -6,8 +6,8 @@
 //Qt application
 
 //{
-#include "window.cpp"
-//Basic window
+#include "window.hpp"
+//Main window
 
 //}
 //Minimal++ libraries
@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
     //Creating qapplication
 
     Window window;
+    //Main window
+
     window.showMaximized();
     //Showing main window of program
 

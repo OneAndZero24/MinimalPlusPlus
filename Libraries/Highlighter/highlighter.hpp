@@ -20,22 +20,19 @@ class SyntaxHighlighter : public QSyntaxHighlighter
 Q_OBJECT
 
 public:
-    SyntaxHighlighter(QTextDocument *parent = 0) : QSyntaxHighlighter(parent)
-    //Constructor
+    SyntaxHighlighter(QTextDocument *parent = 0); //Constructor
 
 protected:
-    highlightBlock(const QString &code) Q_DECL_OVERRIDE
-    //Highlighting function
+    void highlightBlock(const QString &code) Q_DECL_OVERRIDE; //Highlighting function
 
 private:
-    struct Rule
+    struct Rule //Rules for syntax highlighting
     {
         QRegExp pattern;        //Pattern - what to highlight
         QTextCharFormat format; //Format - how to highlight
     };
-    //Rules for syntax highlighting
 
-    QVector<Rule> highlightRules; //Vector of highlighting rules
+    QVector<Rule> highlightingRules; //Vector of highlighting rules
 
     QRegExp commentStartExpression; //Start of comment format
     QRegExp commentEndExpression;   //End of comment format

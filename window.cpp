@@ -13,7 +13,7 @@ using namespace File_Handling;
 //==================================================================
 Window::Window()
 {
-    QWidget *lhandler = new QWidget;
+    lhandler = new QWidget;
     //Widget for layout handling
 
     layout = new QGridLayout;
@@ -48,7 +48,18 @@ Window::Window()
 }
 //Constructor
 
-QTreeWidgetItem *Window::AddDir(QString name)
+Window::~Window()
+{
+    delete layout;
+    delete lhandler;
+    delete highlighter;
+    delete currentfile;
+    delete currentdir;
+    //Memory managment
+}
+//Destructor
+
+QTreeWidgetItem* Window::AddDir(QString name)
 {
     QTreeWidgetItem *dir = new QTreeWidgetItem(tree);
     //Creating new dir tree widget item
@@ -79,6 +90,8 @@ void Window::AddFile(QString name, QTreeWidgetItem *dir)
 
     dir->addChild(file);
     //Adding file to tree in specified dir
+
+    delete file;
 }
 //Adding new file to directory in tree view
 
@@ -133,14 +146,16 @@ void Window::createNewProject()
 
 void Window::openCurrFile()
 {
-    QFile handler = openFile();
+    QFile *handler = OpenCurrFile(this);
     //Opening file
 
-    setCEditorText(handler->readAll());
+    setCEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
     //Displaying it in code editor
 
-    addFileToTree(handler);
+    addFileToTree(handler, this);
     //Adding file to file tree
+
+    delete handler;
 }
 //Open file and set it as current - handle it slot
 
@@ -461,7 +476,7 @@ void Window::CreateTextEditor()
     //Adding to layout
 
     QFont font;
-    font.setFamily(QString::fromStdString(stdfont));
+    font.setFamily(stdfont);
     font.setFixedPitch(true);
     font.setPointSize(fontsize);
     //Designing font

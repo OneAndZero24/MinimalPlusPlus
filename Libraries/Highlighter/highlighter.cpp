@@ -63,7 +63,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 //{
 
 
-    operatorFormat.setForeground(Qt::lightBlue);
+    operatorFormat.setForeground(Qt::yellow);
     operatorFormat.setFontWeight(QFont::Normal);
     //Settings for operators
 
@@ -94,20 +94,20 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 //Operators highlight setup
 
     preprocessordirectiveFormat.setForeground(Qt::darkGreen);
-    preprocessordirectiveFormat.setWeight(QFont::Bold);
+    preprocessordirectiveFormat.setFontWeight(4);
     rule.pattern = QRegExp("#[^\n]*");
     rule.format = preprocessordirectiveFormat;
-    highlightingRules.append(rule)
+    highlightingRules.append(rule);
 //Preprocessor directives highlight setup
 
-    singleLineCommentFormat.setForeground(Qt::lightGreen);
+    singleLineCommentFormat.setForeground(Qt::green);
     singleLineCommentFormat.setFontItalic(true);
     rule.pattern = QRegExp("//[^\n]*");
     rule.format = singleLineCommentFormat;
     highlightingRules.append(rule);
 //Single line comment highlight setup
 
-    multiLineCommentFormat.setForeground(Qt::lightGreen);
+    multiLineCommentFormat.setForeground(Qt::green);
     multiLineCommentFormat.setFontItalic(true);
     commentStartExpression = QRegExp("/\\*");
     commentEndExpression = QRegExp("\\*/");
@@ -137,7 +137,7 @@ SyntaxHighlighter::SyntaxHighlighter(QTextDocument *parent) : QSyntaxHighlighter
 
 void SyntaxHighlighter::highlightBlock(const QString &code)
 {
-    foreach(const HighlightingRule &rule, highlightingRules) 
+    foreach(const Rule &rule, highlightingRules)
     {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(code);

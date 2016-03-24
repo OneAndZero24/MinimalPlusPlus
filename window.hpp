@@ -45,17 +45,17 @@
 //Popups
 
 //{
-#include "Libraries/Status_Vars/status_vars.hpp"
-//Important IDE-wide flags and variables
-
-#include "Libraries/Highlighter/highlighter.cpp"
-//Syntax highlighter for text editor
- 
-#include "Libraries/Editor/editor.cpp"
+#include "Libraries/Editor/editor.hpp"
 //Code editor
 
-#include "Libraries/File_Handling/file_handling.cpp"
-//File handling
+#include "Libraries/Highlighter/highlighter.hpp"
+//Syntax highlighter
+
+#include "Libraries/Status_Vars/status_vars.hpp"
+//Important vars
+
+#include "Libraries/File_Handling/file_handling.hpp"
+//Files handling
 
 //}
 //Minimal++ libraries
@@ -70,6 +70,7 @@ Q_OBJECT
 
 private:
     QGridLayout *layout; //Window's grid layout
+    QWidget *lhandler;   //Layout's handler widget
 
     QMenu *fileMenu;     //File menu of program
     QMenu *settingsMenu; //Settings menu of program
@@ -118,7 +119,9 @@ private:
 public:
     Window();  //Constructor
 
-    QTreeWidgetItem *AddDir(QString name);            //Adding directory to tree view
+    ~Window(); //Destructor
+
+    QTreeWidgetItem* AddDir(QString name);            //Adding directory to tree view
     void AddFile(QString name, QTreeWidgetItem *dir); //Adding new file to directory in tree view
 
 private slots:

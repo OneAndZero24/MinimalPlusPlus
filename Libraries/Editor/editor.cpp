@@ -39,10 +39,16 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
     connect(this, SIGNAL(updateRequest(QRect,int)), this, SLOT(updateLineNumberArea(QRect,int)));
     //Conneting update signal to udate line number area slot
 
-    updateLineNumberAreaWidth(0);
+    updateLineNumberAreaWidth();
     //Standard line counter size
 }
 //Constructor
+
+CodeEditor::~CodeEditor()
+{
+    delete lineNumberArea;
+    //Free allocated memory
+}
 
 int CodeEditor::lineNumberAreaWidth()
 {
@@ -69,7 +75,7 @@ int CodeEditor::lineNumberAreaWidth()
 }
 //Gets size of line counter
 
-void CodeEditor::updateLineNumberAreaWidth(int iDontNeedThisVarButItMustBeHereToMakeSlotCompatibleWithSignal)
+void CodeEditor::updateLineNumberAreaWidth()
 {
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
     //Setting margin of editor to fit line counter there
@@ -91,7 +97,7 @@ void CodeEditor::updateLineNumberArea(const QRect &rect, int dy)
 
     if (rect.contains(viewport()->rect()))
     {
-        updateLineNumberAreaWidth(0);
+        updateLineNumberAreaWidth();
         //Updating line area width
     }
 }

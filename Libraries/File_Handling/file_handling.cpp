@@ -12,9 +12,9 @@ using namespace File_Handling;
 
 //==================================================================
 
-QFile openFile()
+QFile* openCurrFile(Window *window)
 {
-    statusBar()->showMessage("Open file.", 2000);
+    window->statusBar()->showMessage("Open file.", 2000);
     //Status bar tip
 
 	if(projectcreated) //Checking if project is created
@@ -22,8 +22,12 @@ QFile openFile()
     	QString filename;
 		//Important var    
 
-    	filename = QFileDialog::getOpenFileNames(this, "Open File","filename", "All Files (*.*)")[0];
+        filename = QFileDialog::getOpenFileNames(window, "Open File","filename", "All Files (*.*)")[0];
     	//Opening file through file browser
+
+        QFile handler(filename);
+        currentfile = &handler;
+        //Setting currentfile
 
     	if(!currentfile->open(QFile::ReadWrite)) //Opening file and checking if opened
     	{
@@ -32,16 +36,15 @@ QFile openFile()
         	error.setFixedSize(400,200);
         	//Displaying error message
 
-        	return "Error";
+            QFile handler("Error!");
+            currentfile =  &handler;
+            return currentfile;
     	}
 
-    	currentfile = QFile(filename);
-    	//Setting currentfile
-
-    	statusBar()->showMessage("Opened file.", 2000);
+        window->statusBar()->showMessage("Opened file.", 2000);
     	//Status bar tip
 
-    	return currentfile;
+        return currentfile;
 	}
 
 	QMessageBox error;
@@ -49,11 +52,13 @@ QFile openFile()
     error.setFixedSize(400,200);
     //Displaying error message
 
-    return "Error";
+    QFile handler("Error!");
+    currentfile = &handler;
+    return currentfile;
 }
 //Opens file using file browser
 
-void setCEditorText(QString *value)
+void setCEditorText(QString value)
 {
     editor->setPlainText(value);
     //Opening file in editor
@@ -62,11 +67,11 @@ void setCEditorText(QString *value)
 }
 //Sets code editor text
 
-void addFileToTree(QFile *file)
+void addFileToTree(QFile *file, Window *window)
 {
-	if(currentdir != null) //If current dir is set
+    if(currentdir != NULL) //If current dir is set
 	{
-		AddFile(file->fileName, currentdir);
+        window->AddFile(file->fileName(), currentdir);
         //Adding file to treeview
 
         return;
@@ -81,9 +86,9 @@ void addFileToTree(QFile *file)
 }
 //Adds file to file tree
 
-void addDirToTree(QString name)
+void addDirToTree(QString name, Window *window)
 {
-	currentdir = AddDir(name);
+    currentdir = window->AddDir(name);
 	//Creating dir
 
 	return;

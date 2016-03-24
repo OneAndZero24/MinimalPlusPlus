@@ -21,10 +21,7 @@
 //Files handling
 
 //{
-#include "Libraries/Highlighter/highlighter.cpp"
-//Syntax highlighter for text editor
- 
-#include "Libraries/Editor/editor.hpp"
+#include "../Editor/editor.hpp"
 //Code editor
 
 //}
@@ -35,7 +32,7 @@
 
 //==================================================================
 namespace FlagsAndStatus_Vars
-{
+{    
 	QToolBar *tools;                    //Customizable toolbar
 
     QTreeWidget *tree;                  //Files tree
@@ -46,7 +43,7 @@ namespace FlagsAndStatus_Vars
 
     QFile *currentfile;                 //Currenly opened file
     
-    QTreeWidgetItem *currentdir = null; //Currently opened dir
+    QTreeWidgetItem *currentdir = NULL; //Currently opened dir
 
     QString projectname = "Untitled";        //Important var for handling project name
     QString compileroutput = "setthislater"; //Important var for handling compiler output file
@@ -54,7 +51,7 @@ namespace FlagsAndStatus_Vars
     
     int fontsize = 10;                       //Important var for handling standard font size
 
-    bool projcreated = false;                //Important var for hanfling if project is created
+    bool projectcreated = false;             //Important var for hanfling if project is created
 };
 //Namespace for handling important IDE-wide flags and variables
 
