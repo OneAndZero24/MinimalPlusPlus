@@ -14,7 +14,7 @@ It also offers some unusuall functions such as:
 -customazibility
 
 #Info
-Minimal++ is written in C++. The main library that it is using is Qt 5.4.2(especially for UI). Currently Minimal++ is only for Linux, but later we may link it to other platforms. To run programs Minimal++ is using xterm. Default compilator is gcc. Defaul debuger is gdb.
+Minimal++ is written in C++. The main library that it is using is Qt 5.4.2(especially for UI). Currently Minimal++ is only for Linux, but later we may link it to other platforms. To run programs Minimal++ is using xterm. Default compilator is gcc. Default debuger is gdb.
 
 #Icons
 Icon for this program were taken from Eclipse. They are under EPL license. I hope that in the future Minimal++ will have its' own set of icons.
@@ -31,4 +31,4 @@ E-Mail: oneandzero24@gmail.com
 #Note
 This project is currently beeing busily developed. Some of the features are not implemented yet or they are not working, but it will be fixed. Some of the code is currently just a placeholder.
 
-Shortcuts and status bar tips are not working and I am not sure why...
+Shortcuts and status bar tips are not working and I am not sure why... Also currently there are some linker-associated problems...
