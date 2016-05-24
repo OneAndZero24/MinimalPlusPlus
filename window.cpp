@@ -4,9 +4,6 @@
 #include "window.hpp"
 //Header
 
-using namespace FlagsAndStatus_Vars;
-//Namespace for handling important IDE-wide flags and variables
-
 using namespace File_Handling;
 //Namespace for files displayment and overall handling
 
@@ -146,18 +143,24 @@ void Window::createNewProject()
 
 void Window::openCurrFile()
 {
-    QFile *handler = OpenCurrFile(this);
+    QFile *handler = OpenCurrFile(this->statusBar(), OpenFileBrowser);
     //Opening file
 
     setCEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
     //Displaying it in code editor
 
-    addFileToTree(handler, this);
+    addFileToTree(handler, AddFile);
     //Adding file to file tree
 
     delete handler;
 }
 //Open file and set it as current - handle it slot
+
+QStringList Window::OpenFileBrowser()
+{
+    return QFileDialog::getOpenFileNames(this, "filename", currentdir->text(0), "C++ source files (*.cpp);;C source files (*.c);;Header files (*.h);;Header files (*hpp)");
+}
+//Opening file using browser
 
 void Window::openCurrProject()
 {

@@ -1,19 +1,15 @@
 //Minimal++ source code
 //Jan Miksa
 
-//{
-#include <QApplication>
-//Qt application
+#include "includes.hpp"
+//Qt Libraries
 
 //{
-#include "window.hpp"
-//Main window
+#include "window.cpp"
+//Main window and program parts
 
 //}
 //Minimal++ libraries
-
-//}
-//Libraries
 
 int main(int argc, char *argv[])
 {
@@ -24,7 +20,7 @@ int main(int argc, char *argv[])
     //Main window
 
     window.showMaximized();
-    //Showing main window of program
+    //Showing main window of program - maximized default
 
     return app.exec();
     //Start main program loop

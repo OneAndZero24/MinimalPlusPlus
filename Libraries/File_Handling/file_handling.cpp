@@ -7,14 +7,10 @@
 using namespace FlagsAndStatus_Vars;
 //Namespace for handling important IDE-wide flags and variables
 
-using namespace File_Handling;
-//Namespace for files displayment and overall handling
-
 //==================================================================
-
-QFile* openCurrFile(Window *window)
+QFile* File_Handling::OpenCurrFile(QStatusBar*(*bar)(), QStringList(*openFileBrowser)())
 {
-    window->statusBar()->showMessage("Open file.", 2000);
+    bar()->showMessage("Open file.", 2000);
     //Status bar tip
 
 	if(projectcreated) //Checking if project is created
@@ -22,7 +18,7 @@ QFile* openCurrFile(Window *window)
     	QString filename;
 		//Important var    
 
-        filename = QFileDialog::getOpenFileNames(window, "Open File","filename", "All Files (*.*)")[0];
+        filename = openFileBrowser()[0];
     	//Opening file through file browser
 
         QFile handler(filename);
@@ -41,7 +37,7 @@ QFile* openCurrFile(Window *window)
             return currentfile;
     	}
 
-        window->statusBar()->showMessage("Opened file.", 2000);
+        bar()->showMessage("Opened file.", 2000);
     	//Status bar tip
 
         return currentfile;
@@ -58,7 +54,7 @@ QFile* openCurrFile(Window *window)
 }
 //Opens file using file browser
 
-void setCEditorText(QString value)
+void File_Handling::setCEditorText(QString value)
 {
     editor->setPlainText(value);
     //Opening file in editor
@@ -67,11 +63,11 @@ void setCEditorText(QString value)
 }
 //Sets code editor text
 
-void addFileToTree(QFile *file, Window *window)
+void File_Handling::addFileToTree(QFile *file, void(*addFile)(QString, QTreeWidgetItem*))
 {
     if(currentdir != NULL) //If current dir is set
 	{
-        window->AddFile(file->fileName(), currentdir);
+        addFile(file->fileName(), currentdir);
         //Adding file to treeview
 
         return;
@@ -86,9 +82,9 @@ void addFileToTree(QFile *file, Window *window)
 }
 //Adds file to file tree
 
-void addDirToTree(QString name, Window *window)
+void File_Handling::addDirToTree(QString name, QTreeWidgetItem*(*addDir)(QString))
 {
-    currentdir = window->AddDir(name);
+    currentdir = addDir(name);
 	//Creating dir
 
 	return;

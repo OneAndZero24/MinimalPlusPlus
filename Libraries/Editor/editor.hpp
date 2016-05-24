@@ -4,18 +4,8 @@
 #ifndef EDITOR_HPP
 #define EDITOR_HPP
 
-//{
-#include <QPlainTextEdit>
-//Plain text editor
-
-#include <QPainter>
-//Qt painter
-
-#include <QTextBlock>
-//Qt text block
-
-//}
-//Libraries
+#include "includes.hpp"
+//Qt Libraries
 
 class CodeEditor;
 //CodeEditor class header

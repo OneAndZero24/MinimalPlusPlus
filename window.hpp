@@ -5,63 +5,13 @@
 #define WINDOW_HPP
 
 //{
-#include <QApplication>
-//Main Qt application parts
-
-#include <QMainWindow>
-//Qt window
-
-#include <QPushButton>
-//Buttons
-
-#include <QMenu>
-//Menus
-
-#include <QMenuBar>
-//Menubar
-
-#include <QStatusBar>
-//Statusbar
-
-#include <QAction>
-//Actions in menus in menubar
-
-#include <QtGui>
-//Qt GUI
-
-#include <QtCore>
-//Core Qt functions
-
-#include <QGridLayout>
-//Qt grid layout
-
-#include <QWidget>
-//Qt widget
-
-#include <QObject>
-//Qt object
-
-#include <QMessageBox>
-//Popups
-
-//{
 #include "Libraries/Editor/editor.hpp"
-//Code editor
+//Custom code editor
 
 #include "Libraries/Highlighter/highlighter.hpp"
 //Syntax highlighter
-
-#include "Libraries/Status_Vars/status_vars.hpp"
-//Important vars
-
-#include "Libraries/File_Handling/file_handling.hpp"
-//Files handling
-
 //}
 //Minimal++ libraries
-
-//}
-//Libraries
 
 //==================================================================
 class Window : public QMainWindow
@@ -72,12 +22,13 @@ private:
     QGridLayout *layout; //Window's grid layout
     QWidget *lhandler;   //Layout's handler widget
 
-    QMenu *fileMenu;     //File menu of program
-    QMenu *settingsMenu; //Settings menu of program
-    QMenu *contactMenu;  //Contact menu of program
-    QMenu *editMenu;     //Menu of text editor
-    QMenu *buildMenu;    //Menu of build
+    SyntaxHighlighter *highlighter; //Syntax highlighter for code editor
 
+    QAction *customizeTools; //Toolbar settings
+
+    QMenu *fileMenu;
+    //File menu of program
+    //{
     QAction *save;        //Save current file
     QAction *saveAll;     //Save all files
     QAction *saveAs;      //Save current file as
@@ -86,27 +37,40 @@ private:
     QAction *openFile;    //Open file and add to current project, if no project popup error
     QAction *openProject; //Open project file
     QAction *deleteFile;  //Delete current file
+    //}
 
+    QMenu *editMenu;
+    //Menu of text editor
+    //{
     QAction *copy;  //Copy text
     QAction *paste; //Paste text
     QAction *cut;   //Cut text
     QAction *undo;  //Undo changes in text
     QAction *redo;  //Redo changes in text
+    //}
 
+    QMenu *buildMenu;
+    //Build/Compile menu
+    //{
     QAction *compileProj; //Comiple project
     QAction *runProg;     //Run program
+    //}
 
+    QMenu *settingsMenu;
+    //Settings menu
+    //{
     QAction *windowSize;        //Set window size and remember it for this project
     QAction *editorText;        //Setup font of editor and remember it for this project
     QAction *terminalText;      //Setup font of terminal/output and remember it for this project
     QAction *customCompileLine; //Setup custom compilation line and remember it for this project
     QAction *customLinkLine;    //Setup custom linker line and remember it for this project
+    //}
 
+    QMenu *contactMenu;
+    //Contact menu
+    //{
     QAction *contact; //Contact
-
-    QAction *customizeTools; //Toolbar settings
-
-    SyntaxHighlighter *highlighter; //Syntax highlighter for code editor
+    //}
 
     void CreateActions();     //Inicializes actions
     void CreateMenu();        //Inicializes menu of program
@@ -118,11 +82,32 @@ private:
 
 public:
     Window();  //Constructor
-
     ~Window(); //Destructor
 
+    //Window UI parts
+    //{
+    QToolBar *tools;      //Customizable toolbar
+    QTreeWidget *tree;    //Files tree view
+    QTextBrowser *output; //Text browser for terminal and IDE output
+    CodeEditor *editor;   //Editor
+    //}
+
+    //Important vars
+    //{
+    QFile *currentfile;                 //Currenly opened file
+    QTreeWidgetItem *currentdir = NULL; //Currently opened dir
+
+    QString projectname = "Untitled";        //Important var for handling project name
+    QString compileroutput = "setthislater"; //Important var for handling compiler output file
+    QString stdfont = "Ubuntu";              //Important var for handling standard font
+
+    int fontsize = 10;                       //Important var for handling standard font size
+
+    bool projectcreated = false;             //Important var for hanfling if project is created
+    //}
+
     QTreeWidgetItem* AddDir(QString name);            //Adding directory to tree view
-    void AddFile(QString name, QTreeWidgetItem *dir); //Adding new file to directory in tree view
+    void AddFile(QString name, QTreeWidgetItem *dir); //Adding new file to current directory in tree view
 
 private slots:
     void compile();           //Compile slot

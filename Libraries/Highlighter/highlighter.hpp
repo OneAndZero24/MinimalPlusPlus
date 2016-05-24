@@ -4,15 +4,8 @@
 #ifndef HIGHLIGHTER_HPP
 #define HIGHLIGHTER_HPP
 
-//{
-#include <QSyntaxHighlighter>
-//Qt synatx highlighter - base for ours
-
-#include <QTextCharFormat>
-//Qt text format
-
-//}
-//Libraries
+#include "includes.hpp"
+//Qt Libraries
 
 //==================================================================
 class SyntaxHighlighter : public QSyntaxHighlighter
