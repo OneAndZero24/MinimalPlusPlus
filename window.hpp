@@ -5,10 +5,10 @@
 #define WINDOW_HPP
 
 //{
-#include "Libraries/Editor/editor.hpp"
+#include "Libraries/Editor/editor.cpp"
 //Custom code editor
 
-#include "Libraries/Highlighter/highlighter.hpp"
+#include "Libraries/Highlighter/highlighter.cpp"
 //Syntax highlighter
 //}
 //Minimal++ libraries
@@ -106,6 +106,13 @@ public:
     bool projectcreated = false;             //Important var for hanfling if project is created
     //}
 
+    QFile* OpenCurrFile();                            //Opens file using file browser
+    void SetEditorText(QString value);                //Sets code editor text
+
+    bool CloseFile(QFile *file);                      //Closes file
+    bool DeleteFile(QFile *file);                     //Deletes file
+    bool SaveFile(QFile *file);                       //Saves specified file
+
     QTreeWidgetItem* AddDir(QString name);            //Adding directory to tree view
     void AddFile(QString name, QTreeWidgetItem *dir); //Adding new file to current directory in tree view
 
@@ -133,8 +140,6 @@ private slots:
     void undoText();          //Undo slot
     void redoText();          //Redo slot
 };
-//Basic window class
-
 //==================================================================
 //Window class declaration
 

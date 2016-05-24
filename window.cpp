@@ -4,10 +4,8 @@
 #include "window.hpp"
 //Header
 
-using namespace File_Handling;
-//Namespace for files displayment and overall handling
-
 //==================================================================
+//{
 Window::Window()
 {
     lhandler = new QWidget;
@@ -55,211 +53,10 @@ Window::~Window()
     //Memory managment
 }
 //Destructor
+//}
+//Constructor/Destructor segment
 
-QTreeWidgetItem* Window::AddDir(QString name)
-{
-    QTreeWidgetItem *dir = new QTreeWidgetItem(tree);
-    //Creating new dir tree widget item
-
-    dir->setText(0, name);
-    //Setting column and name
-
-    dir->setIcon(0, QIcon(":/Icons/resource_icon.gif"));
-    //Setting icon
-
-    tree->addTopLevelItem(dir);
-    //Adding directory to tree
-
-    return dir;
-}
-//Adding directory to tree view
-
-void Window::AddFile(QString name, QTreeWidgetItem *dir)
-{
-    QTreeWidgetItem *file = new QTreeWidgetItem(dir);
-    //Creating new file tree widget item
-
-    file->setText(0, name);
-    //Setting column and name
-
-    file->setIcon(0, QIcon(":/Icons/resource_icon.gif"));
-    //Setting icon
-
-    dir->addChild(file);
-    //Adding file to tree in specified dir
-
-    delete file;
-}
-//Adding new file to directory in tree view
-
-void Window::compile()
-{
-    statusBar()->showMessage("Compile project.", 2000);
-    //Status bar tip
-}
-//Compile slot
-
-void Window::run()
-{
-    statusBar()->showMessage("Run compiled program.", 2000);
-    //Status bar tip
-}
-//Run slot
-
-void Window::saveCurrFile()
-{
-    statusBar()->showMessage("Save current file.", 2000);
-    //Status bar tip
-}
-//Save current file slot
-
-void Window::saveAllFiles()
-{
-    statusBar()->showMessage("Save all files in current project.", 2000);
-    //Status bar tip
-}
-//Save all files in current project slot
-
-void Window::saveCurrFileAs()
-{
-    statusBar()->showMessage("Save current file as.", 2000);
-    //Status bar tip
-}
-//Save current file as slot
-
-void Window::createNewFile()
-{
-    statusBar()->showMessage("Create new file.", 2000);
-    //Status bar tip
-}
-//Create new file slot
-
-void Window::createNewProject()
-{
-    statusBar()->showMessage("Create new project.", 2000);
-    //Status bar tip
-}
-//Create new project slot
-
-void Window::openCurrFile()
-{
-    QFile *handler = OpenCurrFile(this->statusBar(), OpenFileBrowser);
-    //Opening file
-
-    setCEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
-    //Displaying it in code editor
-
-    addFileToTree(handler, AddFile);
-    //Adding file to file tree
-
-    delete handler;
-}
-//Open file and set it as current - handle it slot
-
-QStringList Window::OpenFileBrowser()
-{
-    return QFileDialog::getOpenFileNames(this, "filename", currentdir->text(0), "C++ source files (*.cpp);;C source files (*.c);;Header files (*.h);;Header files (*hpp)");
-}
-//Opening file using browser
-
-void Window::openCurrProject()
-{
-    statusBar()->showMessage("Open project.", 2000);
-    //Status bar tip
-}
-//Open project and set it as current - handle it slot
-
-void Window::changeCompilerCmd()
-{
-    statusBar()->showMessage("Change compiler command and settings.", 2000);
-    //Status bar tip
-}
-//Change compiler command and settings slot
-
-void Window::changeLinkerCmd()
-{
-    statusBar()->showMessage("Change linker command and settings.", 2000);
-    //Status bar tip
-}
-//Change linker command and settings slot
-
-void Window::contactSL()
-{
-    statusBar()->showMessage("Contact of creator and information about project.", 2000);
-    //Status bar tip
-}
-//Contact slot
-
-void Window::copyText()
-{
-    statusBar()->showMessage("Copy text.", 2000);
-    //Status bar tip
-}
-//Copy text slot
-
-void Window::pasteText()
-{
-    statusBar()->showMessage("Paste text.", 2000);
-    //Status bar tip
-}
-//Paste text slot
-
-void Window::cutText()
-{
-    statusBar()->showMessage("Cut text.", 2000);
-    //Status bar tip
-}
-//Cut text slot
-
-void Window::deleteCurrFile()
-{
-    statusBar()->showMessage("Delete current file.", 2000);
-    //Status bar tip
-}
-//Delete current file slot
-
-void Window::changeWindowSize()
-{
-    statusBar()->showMessage("Change size of window.", 2000);
-    //Status bar tip
-}
-//Change window size slot
-
-void Window::changeEditTxt()
-{
-    statusBar()->showMessage("Change font of text editor.", 2000);
-    //Status bar tip
-}
-//Change font of text editor slot
-
-void Window::changeTermTxt()
-{
-    statusBar()->showMessage("Change font of terminal.", 2000);
-    //Status bar tip
-}
-//Change font of terminal slot
-
-void Window::customize()
-{
-    statusBar()->showMessage("Customize tools toolbar.", 2000);
-    //Status bar tip
-}
-//Customize tools toolbar slot
-
-void Window::undoText()
-{
-    statusBar()->showMessage("Undo.", 2000);
-    //Status bar tip
-}
-//Undo slot
-
-void Window::redoText()
-{
-    statusBar()->showMessage("Redo.", 2000);
-    //Status bar tip
-}
-//Redo slot
-
+//{
 void Window::CreateActions()
 {
     save = new QAction(QIcon(":/Icons/save_icon.gif"), "Save", this);
@@ -491,6 +288,263 @@ void Window::CreateTextEditor()
     //Setting up highlighter to highlight current document in text editor
 }
 //Inicializes text editor
+//}
+//Program UI parts inicializing segment
+
+//{
+QFile* Window::OpenCurrFile()
+{
+    this->statusBar()->showMessage("Open file.", 2000);
+    //Status bar tip
+
+    if(projectcreated) //Checking if project is created
+    {
+        QString filename;
+        //Important var
+
+        filename = QFileDialog::getOpenFileName(this, "filename", currentdir->text(0), "C++ source files (*.cpp);;C source files (*.c);;Header files (*.h);;Header files (*hpp)");
+        //Opening file through file browser
+
+        QFile handler(filename);
+        currentfile = &handler;
+        //Setting currentfile
+
+        if(!currentfile->open(QFile::ReadWrite)) //Opening file and checking if opened
+        {
+            QMessageBox error;
+            error.critical(0,"Error!","Could not open file!");
+            error.setFixedSize(400,200);
+            //Displaying error message
+
+            QFile handler("Error!");
+            currentfile =  &handler;
+            return currentfile;
+        }
+
+        this->statusBar()->showMessage("Opened file.", 2000);
+        //Status bar tip
+
+        return currentfile;
+    }
+
+    QMessageBox error;
+    error.critical(0,"Error!","No project created!");
+    error.setFixedSize(400,200);
+    //Displaying error message
+
+    QFile handler("Error!");
+    currentfile = &handler;
+    return currentfile;
+}
+//Opens file using file browser
+
+void Window::SetEditorText(QString value)
+{
+    editor->setPlainText(value);
+    //Opening file in editor
+}
+//Sets code editor text
+
+QTreeWidgetItem* Window::AddDir(QString name)
+{
+    QTreeWidgetItem *dir = new QTreeWidgetItem(tree);
+    //Creating new dir tree widget item
+
+    dir->setText(0, name);
+    //Setting column and name
+
+    dir->setIcon(0, QIcon(":/Icons/resource_icon.gif"));
+    //Setting icon
+
+    tree->addTopLevelItem(dir);
+    //Adding directory to tree
+
+    return dir;
+}
+//Adding directory to tree view
+
+void Window::AddFile(QString name, QTreeWidgetItem *dir)
+{
+    QTreeWidgetItem *file = new QTreeWidgetItem(dir);
+    //Creating new file tree widget item
+
+    file->setText(0, name);
+    //Setting column and name
+
+    file->setIcon(0, QIcon(":/Icons/resource_icon.gif"));
+    //Setting icon
+
+    dir->addChild(file);
+    //Adding file to tree in specified dir
+}
+//Adding new file to directory in tree view
+//}
+//File handling segment
+
+//{
+void Window::compile()
+{
+    statusBar()->showMessage("Compile project.", 2000);
+    //Status bar tip
+}
+//Compile slot
+
+void Window::run()
+{
+    statusBar()->showMessage("Run compiled program.", 2000);
+    //Status bar tip
+}
+//Run slot
+
+void Window::saveCurrFile()
+{
+    statusBar()->showMessage("Save current file.", 2000);
+    //Status bar tip
+}
+//Save current file slot
+
+void Window::saveAllFiles()
+{
+    statusBar()->showMessage("Save all files in current project.", 2000);
+    //Status bar tip
+}
+//Save all files in current project slot
+
+void Window::saveCurrFileAs()
+{
+    statusBar()->showMessage("Save current file as.", 2000);
+    //Status bar tip
+}
+//Save current file as slot
+
+void Window::createNewFile()
+{
+    statusBar()->showMessage("Create new file.", 2000);
+    //Status bar tip
+}
+//Create new file slot
+
+void Window::createNewProject()
+{
+    statusBar()->showMessage("Create new project.", 2000);
+    //Status bar tip
+}
+//Create new project slot
+
+void Window::openCurrFile()
+{
+    QFile *handler = OpenCurrFile(this->statusBar(), OpenFileBrowser);
+    //Opening file
+
+    setCEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
+    //Displaying it in code editor
+
+    addFileToTree(handler, AddFile);
+    //Adding file to file tree
+
+    delete handler;
+}
+//Open file and set it as current - handle it slot
+
+void Window::openCurrProject()
+{
+    statusBar()->showMessage("Open project.", 2000);
+    //Status bar tip
+}
+//Open project and set it as current - handle it slot
+
+void Window::changeCompilerCmd()
+{
+    statusBar()->showMessage("Change compiler command and settings.", 2000);
+    //Status bar tip
+}
+//Change compiler command and settings slot
+
+void Window::changeLinkerCmd()
+{
+    statusBar()->showMessage("Change linker command and settings.", 2000);
+    //Status bar tip
+}
+//Change linker command and settings slot
+
+void Window::contactSL()
+{
+    statusBar()->showMessage("Contact of creator and information about project.", 2000);
+    //Status bar tip
+}
+//Contact slot
+
+void Window::copyText()
+{
+    statusBar()->showMessage("Copy text.", 2000);
+    //Status bar tip
+}
+//Copy text slot
+
+void Window::pasteText()
+{
+    statusBar()->showMessage("Paste text.", 2000);
+    //Status bar tip
+}
+//Paste text slot
+
+void Window::cutText()
+{
+    statusBar()->showMessage("Cut text.", 2000);
+    //Status bar tip
+}
+//Cut text slot
+
+void Window::deleteCurrFile()
+{
+    statusBar()->showMessage("Delete current file.", 2000);
+    //Status bar tip
+}
+//Delete current file slot
+
+void Window::changeWindowSize()
+{
+    statusBar()->showMessage("Change size of window.", 2000);
+    //Status bar tip
+}
+//Change window size slot
+
+void Window::changeEditTxt()
+{
+    statusBar()->showMessage("Change font of text editor.", 2000);
+    //Status bar tip
+}
+//Change font of text editor slot
+
+void Window::changeTermTxt()
+{
+    statusBar()->showMessage("Change font of terminal.", 2000);
+    //Status bar tip
+}
+//Change font of terminal slot
+
+void Window::customize()
+{
+    statusBar()->showMessage("Customize tools toolbar.", 2000);
+    //Status bar tip
+}
+//Customize tools toolbar slot
+
+void Window::undoText()
+{
+    statusBar()->showMessage("Undo.", 2000);
+    //Status bar tip
+}
+//Undo slot
+
+void Window::redoText()
+{
+    statusBar()->showMessage("Redo.", 2000);
+    //Status bar tip
+}
+//Redo slot
+//}
+//Slots segment
 
 //==================================================================
 //Window class definition
