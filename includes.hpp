@@ -1,6 +1,9 @@
 //Minimal++ source code
 //Jan Miksa
 
+#ifndef INCLUDES_HPP
+#define INCLUDES_HPP
+
 //{
 #include <QApplication>
 //Qt application
@@ -73,3 +76,5 @@
 
 //}
 //All of the Qt library elements that are needed for this project
+
+#endif

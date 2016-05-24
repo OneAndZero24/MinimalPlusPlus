@@ -8,10 +8,10 @@
 //Qt Libraries
 
 //{
-#include "Libraries/Editor/editor.cpp"
+#include "Libraries/Editor/editor.hpp"
 //Custom code editor
 
-#include "Libraries/Highlighter/highlighter.cpp"
+#include "Libraries/Highlighter/highlighter.hpp"
 //Syntax highlighter
 //}
 //Minimal++ libraries
@@ -101,7 +101,7 @@ public:
     QTreeWidgetItem *currentdir = NULL; //Currently opened dir
 
     QString projectname = "Untitled";        //Important var for handling project name
-    QString compileroutput = "setthislater"; //Important var for handling compiler output file
+    QString compileroutput = "main.cpp";     //Important var for handling compiler output file
     QString stdfont = "Ubuntu";              //Important var for handling standard font
 
     int fontsize = 10;                       //Important var for handling standard font size

@@ -5,7 +5,7 @@
 //Qt Libraries
 
 //{
-#include "window.cpp"
+#include "window.hpp"
 //Main window and program parts
 
 //}
