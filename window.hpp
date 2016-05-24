@@ -4,6 +4,9 @@
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
+#include "includes.hpp"
+//Qt Libraries
+
 //{
 #include "Libraries/Editor/editor.cpp"
 //Custom code editor

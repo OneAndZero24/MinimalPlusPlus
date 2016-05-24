@@ -433,13 +433,13 @@ void Window::createNewProject()
 
 void Window::openCurrFile()
 {
-    QFile *handler = OpenCurrFile(this->statusBar(), OpenFileBrowser);
+    QFile *handler = OpenCurrFile();
     //Opening file
 
-    setCEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
+    SetEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
     //Displaying it in code editor
 
-    addFileToTree(handler, AddFile);
+    AddFile(handler->fileName(), currentdir);
     //Adding file to file tree
 
     delete handler;
