@@ -284,7 +284,7 @@ void Window::CreateTextEditor()
     editor->setFont(font);
     //Setting up font of text editor
 
-    highlighter = new SyntaxHighlighter(editor->document());
+    //highlighter = new SyntaxHighlighter(editor->document());
     //Setting up highlighter to highlight current document in text editor
 }
 //Inicializes text editor
@@ -305,35 +305,32 @@ QFile* Window::OpenCurrFile()
         filename = QFileDialog::getOpenFileName(this, "filename", currentdir->text(0), "C++ source files (*.cpp);;C source files (*.c);;Header files (*.h);;Header files (*hpp)");
         //Opening file through file browser
 
-        QFile handler(filename);
-        currentfile = &handler;
-        //Setting currentfile
+        QFile *handler = new QFile(filename);
 
         if(!currentfile->open(QFile::ReadWrite)) //Opening file and checking if opened
         {
-            QMessageBox error;
-            error.critical(0,"Error!","Could not open file!");
-            error.setFixedSize(400,200);
+            QMessageBox::warning(this, "Error!", "Could not open file!");
             //Displaying error message
 
-            QFile handler("Error!");
-            currentfile =  &handler;
-            return currentfile;
+            QFile *handler = new QFile("Error!");
+            currentfile = handler;
+            return handler;
         }
 
         this->statusBar()->showMessage("Opened file.", 2000);
         //Status bar tip
 
+        currentfile = handler;
+        //Setting currentfile
+
         return currentfile;
     }
 
-    QMessageBox error;
-    error.critical(0,"Error!","No project created!");
-    error.setFixedSize(400,200);
+    QMessageBox::warning(this, "Error!", "Project not created!");
     //Displaying error message
 
-    QFile handler("Error!");
-    currentfile = &handler;
+    QFile *handler = new QFile("Error!");
+    currentfile = handler;
     return currentfile;
 }
 //Opens file using file browser
@@ -436,13 +433,15 @@ void Window::openCurrFile()
     QFile *handler = OpenCurrFile();
     //Opening file
 
-    SetEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
-    //Displaying it in code editor
+    if(handler->fileName() != "Error!")
+    {
+        SetEditorText(QTextCodec::codecForMib(1015)->toUnicode(handler->readAll()));
+        //Displaying it in code editor
 
-    AddFile(handler->fileName(), currentdir);
-    //Adding file to file tree
-
-    delete handler;
+        AddFile(handler->fileName(), currentdir);
+        //Adding file to file tree
+    }
+    //Checking if error occured
 }
 //Open file and set it as current - handle it slot
 

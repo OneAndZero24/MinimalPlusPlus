@@ -83,6 +83,8 @@ private:
     void CreateTextBrowser(); //Inicializes text browser for terminal and IDE output
     void CreateTextEditor();  //Inicializes text editor
 
+    QFile* OpenCurrFile();                            //Opens file using file browser
+
 public:
     Window();  //Constructor
     ~Window(); //Destructor
@@ -101,15 +103,14 @@ public:
     QTreeWidgetItem *currentdir = NULL; //Currently opened dir
 
     QString projectname = "Untitled";        //Important var for handling project name
-    QString compileroutput = "main.cpp";     //Important var for handling compiler output file
-    QString stdfont = "Ubuntu";              //Important var for handling standard font
+    QString compileroutput = "setthislater"; //Important var for handling compiler output file
+    QString stdfont = "Ubuntu Mono";              //Important var for handling standard font
 
     int fontsize = 10;                       //Important var for handling standard font size
 
     bool projectcreated = false;             //Important var for hanfling if project is created
     //}
 
-    QFile* OpenCurrFile();                            //Opens file using file browser
     void SetEditorText(QString value);                //Sets code editor text
 
     bool CloseFile(QFile *file);                      //Closes file
