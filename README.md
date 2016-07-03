@@ -29,6 +29,6 @@ Creator: Jan Miksa(OneAndZero24)
 E-Mail: oneandzero24@gmail.com
 
 #Note
-This project is currently beeing busily developed. Some of the features are not implemented yet or they are not working, but it will be fixed. Some of the code is currently just a placeholder.
+This project is currently beeing busily developed. Some of the features are not implemented yet or they are not working, but it will be fixed. Some of the code is currently just a placeholder. Currently this project is suspended. :(
 
 #Evereyone is welcome to contribute to this project or customize it to suit their needs! :D
